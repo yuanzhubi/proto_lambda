@@ -16,7 +16,7 @@ int main(){
         	cout << ++v << endl;
         	i = 3, j=4;
       	}),
-	i,j);			//捕获列表，别超过10个。
+	i,j);			//按值捕获列表，别超过10个。 外面的i,j的值不会变化。
     my_lambda(6,6);
     cout << endl;
     my_lambda(0,0);
