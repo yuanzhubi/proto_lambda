@@ -54,19 +54,19 @@ namespace proto_lambda{
     struct co_empty{};
 }
 
-#define PL_DEF_LAMBDA_STRUCT(base_type, return_type, co_lambda,  ...) \
+#define PL_DEF_LAMBDA_STRUCT(base_type, co_lambda,  ...) \
 PL_FOR_EACH_E(PL_TYPEDEF, ##__VA_ARGS__) \
 struct PL_JOIN(PL_LAMBDA_TYPE_, __LINE__):public base_type{\
     PL_FOR_EACH_E(PL_DEF_MEMBER, ##__VA_ARGS__) \
     PL_JOIN(PL_LAMBDA_TYPE_, __LINE__) (PL_FOR_EACH_E(PL_DEF_MEMBER_ARG, ##__VA_ARGS__) ...): /*... is used for the possible last comma*/\
         base_type() PL_FOR_EACH_E(PL_ASSIGN, ##__VA_ARGS__){} \
-    return_type operator() PL_REMOVE_PARENTHESIS(co_lambda) \
+    PL_REMOVE_PARENTHESIS(co_lambda) \
 }
 
-#define PT_LAMBDA_BASE(base_type, name, return_type, co_lambda, ...) PL_DEF_LAMBDA_STRUCT(base_type, return_type, PL_EXPAND(co_lambda), ##__VA_ARGS__)  name( PL_FOR_EACH_E(PL_COMMA_BACK, ##__VA_ARGS__) 0);
-#define PT_LAMBDA_BASE_NEW(base_type, name, return_type, co_lambda, ...) PL_DEF_LAMBDA_STRUCT(base_type, return_type, PL_EXPAND(co_lambda), ##__VA_ARGS__) *name = new PL_JOIN(PL_LAMBDA_TYPE_, __LINE__)(__VA_ARGS__);
+#define PT_LAMBDA_BASE(base_type, name, co_lambda, ...) PL_DEF_LAMBDA_STRUCT(base_type, PL_EXPAND(co_lambda), ##__VA_ARGS__)  name( PL_FOR_EACH_E(PL_COMMA_BACK, ##__VA_ARGS__) 0);
+#define PT_LAMBDA_BASE_NEW(base_type, name, co_lambda, ...) PL_DEF_LAMBDA_STRUCT(base_type, PL_EXPAND(co_lambda), ##__VA_ARGS__) *name = new PL_JOIN(PL_LAMBDA_TYPE_, __LINE__)(__VA_ARGS__);
 
-#define PT_LAMBDA(name, return_type, co_lambda, ...) PT_LAMBDA_BASE(proto_lambda::co_empty, name, return_type, co_lambda, ##__VA_ARGS__)
-#define PT_LAMBDA_NEW(name, return_type, co_lambda, ...) PT_LAMBDA_BASE_NEW(proto_lambda::co_empty, name, return_type, co_lambda, ##__VA_ARGS__)
+#define PT_LAMBDA(name, co_lambda, ...) PT_LAMBDA_BASE(proto_lambda::co_empty, name, co_lambda, ##__VA_ARGS__)
+#define PT_LAMBDA_NEW(name,  co_lambda, ...) PT_LAMBDA_BASE_NEW(proto_lambda::co_empty, name, co_lambda, ##__VA_ARGS__)
 
 #endif
