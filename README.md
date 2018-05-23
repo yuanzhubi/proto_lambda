@@ -1,5 +1,5 @@
 # proto_lambda
-我们有时候需要lambda对象的生命周期超过一次函数调用，从而不得不通过拷贝或者bind它到std::function。这导致了它捕获的数据在这个过程中不必要的拷贝甚至多次拷贝。
+我们有时候需要lambda对象的生命周期超出当前函数调用，不得不通过拷贝或者bind它到std::function。这导致了它捕获的数据在这个过程中不必要的拷贝甚至多次拷贝（原来分配在栈，拷贝去堆或者别的地方）。
 
 此外我们有时需要lambda对象持有的更多的状态，除了捕获变量可能还需要别的状态变量。而传统的C++11根本无法给lambda增加成员变量，只能在lambda外定义局部变量再捕获，制造了很多不必要的拷贝和反内聚。
 
@@ -8,4 +8,5 @@ proto_lambda就旨在解决上述问题，他提供了以下特性：
 2. 允许你的lambda类型new 出来一个指针，使得他的生命周期不在局限于函数栈。注意它毕竟是一个匿名类型，显然离开函数和生命周期管理只能通过父类指针，一定要让你的父类有虚析构函数。
 3. 如果你的编译器支持gcc的__typeof__操作符（gcc clang都支持），那么c++03也能使用这个lambda组件。
 4. 支持最多10个捕获变量列表。目前语法上只支持按值捕获，而不支持引用捕获和this捕获。
-5. 用法请见https://github.com/yuanzhubi/proto_lambda/blob/master/test.cpp
+5. 用法请见https://github.com/yuanzhubi/proto_lambda/blob/master/test.cpp。
+6. 未来甚至考虑如java一般支持重写虚函数。
