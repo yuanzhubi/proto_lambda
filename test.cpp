@@ -40,11 +40,11 @@ int main(){
         virtual ~angry_base(){}
     }*p;
     PT_LAMBDA_BASE_NEW(
-        angry_base, 
-        last_lambda_new, 
-        int, ((int k){
-            return fire + i + k;
-        }), i
+        angry_base, 			//父类名字
+        last_lambda_new, 		//变量名
+        int, ((int k){			//返回类型和参数类型
+            return fire + i + k;	//lambda函数体
+        }), i				//捕获列表
     );
     cout << (*last_lambda_new)(j) << endl;
     p = last_lambda_new;   //last_lambda_new作为一个匿名类型lambda对象，如果离开这个函数还想使用他，那么只能通过父类传递出去。
