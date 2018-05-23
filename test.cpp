@@ -31,7 +31,7 @@ int main(){
         empty_lambda_new, void,((){
         }), i
     );
-    (*empty_lambda_new)();
+    (*empty_lambda_new)();	//empty_lambda_new 这是一个new出来的指针。
     delete empty_lambda_new;
     
     struct angry_base{
@@ -48,7 +48,7 @@ int main(){
     );
     cout << (*last_lambda_new)(j) << endl;
     p = last_lambda_new;   //last_lambda_new作为一个匿名类型lambda对象，如果离开这个函数还想使用他，那么只能通过父类传递出去。
-    delete p;              //所以此时必须通过父类指针来管理他的生命周期，他得通过new来创建且父类析构函数是虚的！
+    delete p;              //所以此时必须通过父类指针来管理他的生命周期，进而他只能通过new来创建且父类析构函数是虚的！
     
     return 0;
 }
