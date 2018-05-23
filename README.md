@@ -8,5 +8,5 @@ proto_lambda就旨在解决上述问题，他提供了以下特性：
 2. 允许你的lambda类型new 出来一个指针，使得他的生命周期不在局限于函数栈。注意它毕竟是一个匿名类型，显然离开函数和生命周期管理只能通过父类指针，一定要让你的父类有虚析构函数。
 3. 如果你的编译器支持gcc的__typeof__操作符（gcc clang都支持），那么c++03也能使用这个lambda组件。
 4. 支持最多10个捕获变量列表。目前语法上只支持按值捕获，而不支持引用捕获和this捕获。
-5. 用法请见https://github.com/yuanzhubi/proto_lambda/blob/master/test.cpp。
+5. 用法请见https://github.com/yuanzhubi/proto_lambda/blob/master/test.cpp 。
 6. 未来甚至考虑如java一般支持重写虚函数。
